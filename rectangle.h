@@ -91,7 +91,7 @@ hit rectangle::getHit(ray r) {
 
     color hit_color = coeff1*coeff2*col;
 
-    return hit(true, vec4(pos.x(), pos.y(), pos.z(), t/c+r_rct.origin().ptime()).Lorentz(-speed), rdir, hit_color);
+    return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_rct.origin().ptime()-t/c).Lorentz(-speed), rdir, hit_color);
     
 	
 }

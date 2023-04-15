@@ -86,7 +86,7 @@ hit sphere::getHit(ray r) {
 	
 	color hit_color = coeff1*coeff2*col;
 
-	return hit(true, vec4(pos.x(), pos.y(), pos.z(), t+r_sph.origin().ptime()).Lorentz(-speed), n, hit_color);
+	return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_sph.origin().ptime()-t).Lorentz(-speed), n, hit_color);
 
 	
 }

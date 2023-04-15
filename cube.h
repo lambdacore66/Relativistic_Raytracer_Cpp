@@ -37,13 +37,13 @@ class cube : public hittable {
 			col = col1;
 		
 			// Add the 6 XYZ aligned faces
-			cube_faces.push_back(rectangle(vec3(-X/2,0,0)+position, vec3(0,0,0), vec3(1,0,0), 0.0, Y, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,-Y/2,0)+position, vec3(0,0,0), vec3(0,1,0), 0.0, X, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,0,-Z/2)+position, vec3(0,0,0), vec3(0,0,1), 0.0, X, Y, col));
+			cube_faces.push_back(rectangle(vec3(-X/2,0,0)+position, speed, vec3(1,0,0), 0.0, Y, Z, col));
+			cube_faces.push_back(rectangle(vec3(0,-Y/2,0)+position, speed, vec3(0,1,0), 0.0, X, Z, col));
+			cube_faces.push_back(rectangle(vec3(0,0,-Z/2)+position, speed, vec3(0,0,1), 0.0, X, Y, col));
 
-			cube_faces.push_back(rectangle(vec3(X/2,0,0)+position, vec3(0,0,0), vec3(1,0,0), 0.0, Y, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,Y/2,0)+position, vec3(0,0,0), vec3(0,1,0), 0.0, X, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,0,Z/2)+position, vec3(0,0,0), vec3(0,0,1), 0.0, X, Y, col));
+			cube_faces.push_back(rectangle(vec3(X/2,0,0)+position, speed, vec3(1,0,0), 0.0, Y, Z, col));
+			cube_faces.push_back(rectangle(vec3(0,Y/2,0)+position, speed, vec3(0,1,0), 0.0, X, Z, col));
+			cube_faces.push_back(rectangle(vec3(0,0,Z/2)+position, speed, vec3(0,0,1), 0.0, X, Y, col));
 
 		}
 		
@@ -61,11 +61,14 @@ hit cube::getHit(ray r) {
 	for (int k = 0; k < 6; k++) {
 
 		rectangle face = cube_faces.at(k);
-		hit face_hit = face.getHit(r.LorentzBoost(speed).rotate(theta*vec3(0,0,1)).rotate(phi*vec3(1,0,0)));
+		hit face_hit = face.getHit(r); //.rotate(theta*vec3(0,0,1)).rotate(phi*vec3(1,0,0)) NEED NO TE BE FIXED AND CORRECTLY IMPLEMENTED. HOWEVER RAYTRACER IS NOW FUNCTIONAL
 
-		if (face_hit.getBool() and face_hit.getWhere().ptime() < temp) {
-			temp = face_hit.getWhere().ptime();
+		if (face_hit.getBool() and  -face_hit.getWhere().ptime() < temp) { // As time is "played" backwards, you need to reverse the time coordinate.
+																	       // You could also take into account the start time and camera initial time, but
+																	       // it is not necessary.
+			temp = -face_hit.getWhere().ptime();
 			real_hit = face_hit;
+
 		}
 
 	}

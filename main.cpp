@@ -43,8 +43,8 @@ int main() {
 
 	std::vector<std::unique_ptr<hittable>> obj_list;
 
-	obj_list.emplace_back(new rectangle(vec3(4, -2, 0), 0.95*c*vec3(-1,0,0), vec3(1,0,0), 0.0, 2.0, 3.0, color(1,1,0)));
-	obj_list.emplace_back(new rectangle(vec3(3, -3, 0), 0.95*c*vec3(-1,0,0), vec3(0,1,0), 0.0, 2.0, 3.0, color(1,1,0)));
+	obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), 0.95*c*vec3(-1,0,0), vec3(1,0,0), 0.0, 2.0, 3.0, color(1,1,0)));
+	obj_list.emplace_back(new rectangle(vec3(3, -3, 0), 0.95*c*vec3(-1,0,0), vec3(0,1,0), 0.0, 3.0, 3.0, color(1,1,0)));
 
 	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));  //ROTATIONS ARE BROKEN RIGHT NOW. MUST BE FIXED IN RAY CLASS
 
@@ -77,9 +77,10 @@ int main() {
 					hittable* obj = obj_list.at(k).get();
 					hit rayhit = obj->getHit(ray1);
 
-				 	if (rayhit.getBool() and rayhit.getWhere().ptime() < temp) {
-
-						temp = rayhit.getWhere().ptime();
+				 	if (rayhit.getBool() and  -rayhit.getWhere().ptime() < temp) { // As time is "played" backwards, you need to reverse the time coordinate.
+																				   // You could also take into account the start time and camera initial time, but
+																				   // it is not necessary.
+						temp = -rayhit.getWhere().ptime();
 
 						color col = rayhit.getColor();
 
