@@ -61,7 +61,7 @@ hit cube::getHit(ray r) {
 	for (int k = 0; k < 6; k++) {
 
 		rectangle face = cube_faces.at(k);
-		hit face_hit = face.getHit(r.LorentzBoost(speed).rotate(theta*vec3(0,0,1)).rotate(phi*vec3(1,0,0))); //;
+		hit face_hit = face.getHit(r.LorentzBoost(speed).rotate(theta*vec3(0,0,1)).rotate(phi*vec3(1,0,0)));
 
 		if (face_hit.getBool() and face_hit.getWhere().ptime() < temp) {
 			temp = face_hit.getWhere().ptime();

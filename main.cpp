@@ -43,7 +43,8 @@ int main() {
 
 	std::vector<std::unique_ptr<hittable>> obj_list;
 
-	obj_list.emplace_back(new rectangle(vec3(3, -4, 0), 0.95*c*vec3(-1,0,0), vec3(1,0,0), 0.0, 2.0, 2.0, color(1,1,0)));
+	obj_list.emplace_back(new rectangle(vec3(4, -2, 0), 0.95*c*vec3(-1,0,0), vec3(1,0,0), 0.0, 2.0, 3.0, color(1,1,0)));
+	obj_list.emplace_back(new rectangle(vec3(3, -3, 0), 0.95*c*vec3(-1,0,0), vec3(0,1,0), 0.0, 2.0, 3.0, color(1,1,0)));
 
 	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));  //ROTATIONS ARE BROKEN RIGHT NOW. MUST BE FIXED IN RAY CLASS
 
