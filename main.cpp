@@ -2,6 +2,13 @@
 #include <fstream>
 #include <vector>
 #include <memory>
+#include <chrono>
+#include <iomanip>
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::milliseconds;
 
 #define STB_IMAGE_WRITE_STATIC
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -64,17 +71,28 @@ int main() {
 	obj_list.emplace_back(new sphere(vec3(15,0,1), 1, 0.0, 0.0,    vec3(0,0,0), color(1,0,0)));
 
 	double fps = 24;
-	double t0 = -2;
-	double tf = t0+5;
+	double t0 = -3;
+	double tf = t0+10;
 
 	double t = t0;
 	int frame = 0;
 
-	int numberFormat = int(log10(floor(abs(tf-t0)*fps)) + 1);
+	int numberFormat = 1;
+	int Nframes = int(floor(abs(tf-t0)*fps));
+
+	if (Nframes != 0) {
+		numberFormat = int(log10(Nframes) + 1);
+	}
 	
 	while(t <= tf) {  //IMPLEMENT TIME RATE
 
+		const auto start = high_resolution_clock::now();
+
 		for (int j = 0 ; j < height; j++) {
+
+			#pragma omp parallel 
+    		#pragma omp for 
+
 			for (int i = 0; i < width; i++) {
 
 				auto offset = ((height-1-j) * width + i) * bytesPerPixel;
@@ -105,6 +123,11 @@ int main() {
 			}
 		}
 
+		const auto end = high_resolution_clock::now();
+
+		duration<double, std::milli> frametime_chrono = end - start;
+		double frametime_sec = frametime_chrono.count()/1E3;
+
 		// FIXEAR CUANDO SOLO HAYA UN FRAME. DA STD::LENGTH_ERROR
 
 		std::string framenumber = std::to_string(frame);
@@ -115,7 +138,13 @@ int main() {
 
 		std::fill(image, image + width * height * bytesPerPixel, 0);
 
-		std::cout << int(100*frame/(abs(tf-t0)*fps))<< "% - Time Remaining: " << "NOT YET IMPLEMENTED" <<"\r";
+
+		double time_remaining = (Nframes-frame)*frametime_sec;
+		int mins_remaining = int(floor(time_remaining / 60));
+		int secs_remaining = int(time_remaining-60*floor(time_remaining / 60));
+
+		std::cout << int(100*frame/Nframes) << "% - Time Remaining: ";
+		std::cout << mins_remaining <<" m " << secs_remaining << " s \r";
 
 		frame++;
 		t = t + 1/fps;
