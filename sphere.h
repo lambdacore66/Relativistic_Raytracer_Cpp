@@ -17,11 +17,13 @@ class sphere: public hittable {
 	public:
 				
 		// Parametrized constructor. Orientation is the camera plane angle from the vertical up position.
-		vec3 position; vec3 speed; double radius; color col;
+		vec3 position; double radius; double Omega1; double Omega2; vec3 speed; color col;
 	
-		sphere(vec3 pos = vec3(), vec3 v = vec3(), double ra = 1, color col1 = color(1, 0, 0)) { 
+		sphere(vec3 pos = vec3(),    double ra = 1, 
+			   double O1 = 0.0,      double O2 = 0.0, 
+			   vec3 v = vec3(0,0,0), color col1 = color(1, 1, 1)) { 
 		
-			position = pos; speed = v; radius = ra; col = col1;
+			position = pos; radius = ra; Omega1 = O1; Omega2 = O2; speed = v; col = col1;
 
 		}
 		
@@ -32,9 +34,7 @@ class sphere: public hittable {
 
 hit sphere::getHit(ray r) {
 
-	ray r_sph = r.LorentzBoost(speed);
-
-	//ray r_sph = r;
+	ray r_sph = r.LorentzBoost(speed);//.rotate(position, -Omega1*vec3(0,0,1)).rotate(position, -Omega2*vec3(1,0,0));
 	
 	vec3 n = r_sph.direction();
 	vec3 delta = r_sph.origin().spatials()-position;
@@ -85,6 +85,9 @@ hit sphere::getHit(ray r) {
 	} 
 	
 	color hit_color = coeff1*coeff2*col;
+
+	//pos = (pos-position).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+position;
+	//n = n.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
 
 	return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_sph.origin().ptime()-t).Lorentz(-speed), n, hit_color);
 

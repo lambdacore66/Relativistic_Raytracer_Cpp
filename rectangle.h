@@ -9,7 +9,6 @@
 #include "vec4.h"
 #include "ray.h"
 #include "hit.h"
-#include "plane.h"
 
 
 class rectangle : public hittable {
@@ -17,13 +16,16 @@ class rectangle : public hittable {
 	public:
 
 		// rectangles are defined by the center position, its normal vector n and a rotation angle phi around that vector. 	
-		vec3 position; vec3 speed; vec3 n; double Omega; double X; double Y; color col;
+		vec3 position; vec3 n; double X; double Y; double Omega1; double Omega2; vec3 speed; color col;
 
         vec3 e2; vec3 e3;
 	
-		rectangle(vec3 pos = vec3(0,0,0), vec3 v = vec3(0,0,0), vec3 normal = vec3(0,0,1), double O = 0.0, double x = 1.0, double y = 1.0, color col1 = color(1, 1, 1)) { 
+		rectangle(vec3 pos = vec3(0,0,0), vec3 normal = vec3(0,0,1), 
+				  double x = 1.0,         double y = 1.0, 
+				  double O1 = 0.0,        double O2 = 0.0,
+				  vec3 v = vec3(0,0,0),   color col1 = color(1, 1, 1)) { 
 		
-			position = pos; speed = v; n = normal.normalize(); Omega = O;  X = abs(x),  Y = abs(y);  col = col1;
+			position = pos; n = normal.normalize();  X = abs(x),  Y = abs(y); Omega1 = O1; Omega2 = O2; speed = v;  col = col1;
 
 			// Orthogonal trihedra
             if (n.cross(vec3(0,0,1)).norm() <= 1E-10) {
@@ -33,10 +35,6 @@ class rectangle : public hittable {
             else {
                 e2 = n.cross(vec3(0,0,1)).normalize();      // "Horizontal" direction on the rectangle plane. Unit vector
 			    e3 = e2.cross(n).normalize(); 		        // "Vertical" direction on the rectangle plane. Unit vector
-			
-			    // Rotate to align with the orientation angle
-			    e2 = e2.rotate(Omega*n).normalize();
-			    e3 = e3.rotate(Omega*n).normalize();
             }
 			
 
@@ -51,7 +49,7 @@ class rectangle : public hittable {
 
 hit rectangle::getHit(ray r) {
 
-    ray r_rct = r.LorentzBoost(speed);
+    ray r_rct = r.LorentzBoost(speed);//.rotate(position, -Omega1*vec3(0,0,1)).rotate(position, -Omega2*vec3(1,0,0));
 	
     vec3 rdir = r_rct.direction();
     
@@ -90,6 +88,9 @@ hit rectangle::getHit(ray r) {
 	double coeff2 = sqrt((A*A+0.1)/1.1);
 
     color hit_color = coeff1*coeff2*col;
+
+	//pos = (pos-position).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+position;
+	//n = n.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
 
     return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_rct.origin().ptime()-t/c).Lorentz(-speed), rdir, hit_color);
     

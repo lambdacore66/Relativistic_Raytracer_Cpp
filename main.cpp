@@ -26,8 +26,8 @@ int main() {
 
 	// Camera definition
 
-	vec4 pos(0, 0, 0, 0);
-	vec3 dir(1, 0, 0);
+	vec4 pos(0, 0, 1, 0);
+	vec3 focal(1, 0, 0);
 	double omega = 0.0;
 	double fov = 120;
 	double aspect_ratio = 7.0/3;
@@ -39,22 +39,33 @@ int main() {
 	std::fill(image, image + width * height * bytesPerPixel, 0);
 	const auto quality    = 95;
 
-	cam cam1(pos, dir, omega, fov, height, aspect_ratio);
+	cam cam1(pos, focal, omega, fov, height, aspect_ratio);
 
 	std::vector<std::unique_ptr<hittable>> obj_list;
 
-	obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), 0.95*c*vec3(-1,0,0), vec3(1,0,0), 0.0, 2.0, 3.0, color(1,1,0)));
-	obj_list.emplace_back(new rectangle(vec3(3, -3, 0), 0.95*c*vec3(-1,0,0), vec3(0,1,0), 0.0, 3.0, 3.0, color(1,1,0)));
+	//Add rectangles
+									        //Position       Normal     X    Y  Omega1 Omega2        v             Color
+	obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), vec3(1,0,0), 2.0, 3.0, 0.0, 0.0, 0.95*c*vec3(-1,0,0), color(1,1,0)));
+	obj_list.emplace_back(new rectangle(vec3(3, -3, 0), vec3(0,1,0), 3.0, 3.0, 0.0, 0.0, 0.95*c*vec3(-1,0,0), color(1,1,0)));
 
-	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));  //ROTATIONS ARE BROKEN RIGHT NOW. MUST BE FIXED IN RAY CLASS
 
-	obj_list.emplace_back(new rectangle(vec3(0,0,-0.5), vec3(0,0,0), vec3(0,0,1), 0.0, 100.0, 100.0, color(1,1,1)));
+	//Add cubes
+									//Position            v            Phi Theta  X    Y    Z       Color
+	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));
 
-	//obj_list.emplace_back(new sphere(vec3(8,-6,1), 0.95*c*vec3(0,-1,0), 1.2, color(1,0,0)));
 
-	double fps = 60;
-	double t0 = -7;
-	double tf = t0+10;
+	//Add planes
+									//Normal     C      Rpos       Omega1 Omega2     v            Color
+	obj_list.emplace_back(new plane(vec3(0,0,1), 0, vec3(5,0,-0.5),  0.0,  0.0, vec3(0,0,0), color(1,1,1)));
+
+
+	//Add spheres
+									//Position    R  Omega1 Omega2        v                Color
+	obj_list.emplace_back(new sphere(vec3(15,0,1), 1, 0.0, 0.0,    vec3(0,0,0), color(1,0,0)));
+
+	double fps = 24;
+	double t0 = -2;
+	double tf = t0+5;
 
 	double t = t0;
 	int frame = 0;

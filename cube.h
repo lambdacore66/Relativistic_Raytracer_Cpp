@@ -37,13 +37,13 @@ class cube : public hittable {
 			col = col1;
 		
 			// Add the 6 XYZ aligned faces
-			cube_faces.push_back(rectangle(vec3(-X/2,0,0)+position, speed, vec3(1,0,0), 0.0, Y, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,-Y/2,0)+position, speed, vec3(0,1,0), 0.0, X, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,0,-Z/2)+position, speed, vec3(0,0,1), 0.0, X, Y, col));
+			cube_faces.push_back(rectangle(vec3(-X/2,0,0)+position, vec3(1,0,0), Y, Z, 0.0, 0.0, speed, col));
+			cube_faces.push_back(rectangle(vec3(0,-Y/2,0)+position, vec3(0,1,0), X, Z, 0.0, 0.0, speed, col));
+			cube_faces.push_back(rectangle(vec3(0,0,-Z/2)+position, vec3(0,0,1), X, Y, 0.0, 0.0, speed, col));
 
-			cube_faces.push_back(rectangle(vec3(X/2,0,0)+position, speed, vec3(1,0,0), 0.0, Y, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,Y/2,0)+position, speed, vec3(0,1,0), 0.0, X, Z, col));
-			cube_faces.push_back(rectangle(vec3(0,0,Z/2)+position, speed, vec3(0,0,1), 0.0, X, Y, col));
+			cube_faces.push_back(rectangle(vec3(X/2,0,0)+position, vec3(1,0,0), Y, Z, 0.0, 0.0, speed, col));
+			cube_faces.push_back(rectangle(vec3(0,Y/2,0)+position, vec3(0,1,0), X, Z, 0.0, 0.0, speed, col));
+			cube_faces.push_back(rectangle(vec3(0,0,Z/2)+position, vec3(0,0,1), X, Y, 0.0, 0.0, speed, col));
 
 		}
 		

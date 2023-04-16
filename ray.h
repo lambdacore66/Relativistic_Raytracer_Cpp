@@ -23,7 +23,7 @@ class ray {
 		ray LorentzBoost(vec3 v);
 
 		ray translate(vec3 Dr);
-		ray rotate(vec3 Omega);
+		ray rotate(vec3 pos, vec3 Omega);
 
 };
 
@@ -48,10 +48,10 @@ ray ray::translate(vec3 Dr) {
 
 }
 
-ray ray::rotate(vec3 Omega) {
+ray ray::rotate(vec3 pos, vec3 Omega) {
 
-	vec3 rp = orig.spatials().rotate(Omega);
-	vec3 dirp = dir.rotate(-Omega);
+	vec3 rp = (orig.spatials()-pos).rotate(Omega)+pos;
+	vec3 dirp = dir.rotate(Omega);
 	
 	return ray(vec4(rp.x(), rp.y(), rp.z(), 0), dirp);
 
