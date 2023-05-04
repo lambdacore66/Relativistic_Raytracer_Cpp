@@ -19,5 +19,5 @@ Two cubes and a sphere moving at 0.95c seeing by two different cameras. Relativi
 
 A perpendicular plane coming at 0.9c before and after crossing the camera view.
 
-![](https://github.com/lambdacore66/Relativistic_Raytracer_Cpp/blob/master/examples/planebefore.jpeg) ![](https://github.com/lambdacore66/Relativistic_Raytracer_Cpp/blob/master/examples/planebefore.jpeg)
+![](https://github.com/lambdacore66/Relativistic_Raytracer_Cpp/blob/master/examples/planebefore.jpeg) ![](https://github.com/lambdacore66/Relativistic_Raytracer_Cpp/blob/master/examples/planeafter.jpeg)
 
