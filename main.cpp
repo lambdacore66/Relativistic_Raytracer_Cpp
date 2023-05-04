@@ -52,13 +52,14 @@ int main() {
 
 	//Add rectangles
 									        //Position       Normal     X    Y  Omega1 Omega2        v             Color
-	obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), vec3(1,0,0), 2.0, 3.0, 0.0, 0.0, 0.95*c*vec3(-1,0,0), color(1,1,0)));
-	obj_list.emplace_back(new rectangle(vec3(3, -3, 0), vec3(0,1,0), 3.0, 3.0, 0.0, 0.0, 0.95*c*vec3(-1,0,0), color(1,1,0)));
+	//obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), vec3(1,0,0), 2.0, 3.0, 0.0, 0.0, 0.95*c*vec3(-1,0,0), color(1,1,0)));
+	//obj_list.emplace_back(new rectangle(vec3(3, -3, 0), vec3(0,1,0), 3.0, 3.0, 0.0, 0.0, 0.95*c*vec3(-1,0,0), color(1,1,0)));
 
 
 	//Add cubes
 									//Position            v            Phi Theta  X    Y    Z       Color
 	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));
+	obj_list.emplace_back(new cube(vec3(3,-4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,1,0)));
 
 
 	//Add planes
@@ -68,11 +69,11 @@ int main() {
 
 	//Add spheres
 									//Position    R  Omega1 Omega2        v                Color
-	obj_list.emplace_back(new sphere(vec3(15,0,1), 1, 0.0, 0.0,    vec3(0,0,0), color(1,0,0)));
+	obj_list.emplace_back(new sphere(vec3(8,0,1), 1, 0.0, 0.0,  0.95*c*vec3(0,-1,0), color(1,0,0)));
 
-	double fps = 24;
-	double t0 = -3;
-	double tf = t0+10;
+	double fps = 60;
+	double t0 = -1.5;
+	double tf = t0+8;
 
 	double t = t0;
 	int frame = 0;
