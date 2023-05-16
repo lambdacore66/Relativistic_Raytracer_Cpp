@@ -7,7 +7,7 @@ Compile code with:
 - Do not use -O3 if you want no compiletor optimizations.
 - Do not use -fopenmp if you want no multithread support.
 
-To obtain video ouput, locate the ffmpeg executable in the same folder as the compiled executable.
+To obtain video ouput, install ffmpeg and add it to the OS path or locate the ffmpeg executable in the same folder as the compiled executable.
 
 
 # Examples
