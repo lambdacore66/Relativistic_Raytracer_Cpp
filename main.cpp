@@ -71,7 +71,7 @@ int main() {
 									//Position    R  Omega1 Omega2        v                Color
 	obj_list.emplace_back(new sphere(vec3(8,0,1), 1, 0.0, 0.0,  0.95*c*vec3(0,-1,0), color(1,0,0)));
 
-	double fps = 60;
+	double fps = 10;
 	double t0 = -1.5;
 	double tf = t0+8;
 
@@ -129,8 +129,6 @@ int main() {
 		duration<double, std::milli> frametime_chrono = end - start;
 		double frametime_sec = frametime_chrono.count()/1E3;
 
-		// FIXEAR CUANDO SOLO HAYA UN FRAME. DA STD::LENGTH_ERROR
-
 		std::string framenumber = std::to_string(frame);
 		std::string s = ".\\frames\\frame"+framenumber.insert(0, numberFormat - std::min(std::string::size_type(numberFormat), framenumber.length()), '0')+".png";
 		char const *name = s.c_str();
@@ -152,7 +150,8 @@ int main() {
 
 	}
 
-	std::string scmd = "python render.py "+std::to_string(int(fps));
+	//ffmpeg -framerate 10 -i ./frames/frame%02d.png -vcodec libx264 -pix_fmt yuv420p -b:v 5000k output.mp4
+	std::string scmd = "ffmpeg -framerate "+std::to_string(int(fps))+" -i .\\frames\\frame%0"+std::to_string(numberFormat)+"d.png -vcodec libx264 -pix_fmt yuv420p -b:v 5000k output.mp4";
 	char const *cmd = scmd.c_str();
 
 	system(cmd);

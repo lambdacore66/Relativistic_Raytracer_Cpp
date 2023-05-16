@@ -3,6 +3,11 @@
 /frames
 /gastroenteritis.mp4
 /render.mp4
+/output.mp4
 /terrel.mp4
 /OLD
 /main.exe
+/ffplay.exe
+/ffmpeg.exe
+/ffprobe.exe
+/render.py
