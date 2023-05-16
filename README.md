@@ -1,4 +1,4 @@
-# Relativistic Raytracer in C/C++ with Python/imageio video renderer
+# Relativistic Raytracer in C/C++ compatible with ffmpeg for video output.
 
 Compile code with:
 
@@ -7,7 +7,7 @@ Compile code with:
 - Do not use -O3 if you want no compiletor optimizations.
 - Do not use -fopenmp if you want no multithread support.
 
-If python and imageio are not correctly set up, the code will still run and output all the video frames, but it will not render them into a single .mp4 file.
+To obtain video ouput, locate the ffmpeg executable in the same folder as the compiled executable.
 
 
 # Examples
