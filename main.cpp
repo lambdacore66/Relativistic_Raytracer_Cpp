@@ -130,7 +130,7 @@ int main() {
 		double frametime_sec = frametime_chrono.count()/1E3;
 
 		std::string framenumber = std::to_string(frame);
-		std::string s = ".\\frames\\frame"+framenumber.insert(0, numberFormat - std::min(std::string::size_type(numberFormat), framenumber.length()), '0')+".png";
+		std::string s = "./frames/frame"+framenumber.insert(0, numberFormat - std::min(std::string::size_type(numberFormat), framenumber.length()), '0')+".png";
 		char const *name = s.c_str();
 
 		stbi_write_png(name, width, height, bytesPerPixel, image, width*bytesPerPixel);
@@ -151,7 +151,7 @@ int main() {
 	}
 
 	//ffmpeg -framerate 10 -i ./frames/frame%02d.png -vcodec libx264 -pix_fmt yuv420p -b:v 5000k output.mp4
-	std::string scmd = "ffmpeg -framerate "+std::to_string(int(fps))+" -i .\\frames\\frame%0"+std::to_string(numberFormat)+"d.png -vcodec libx264 -pix_fmt yuv420p -b:v 5000k output.mp4";
+	std::string scmd = "ffmpeg -framerate "+std::to_string(int(fps))+" -i ./frames/frame%0"+std::to_string(numberFormat)+"d.png -vcodec libx264 -pix_fmt yuv420p -b:v 5000k output.mp4";
 	char const *cmd = scmd.c_str();
 
 	system(cmd);
