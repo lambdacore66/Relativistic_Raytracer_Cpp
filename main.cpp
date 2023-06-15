@@ -76,7 +76,7 @@ int main() {
 
 	double fps = 10;
 	double t0 = 0.0;
-	double tf = t0;
+	double tf = t0+2;
 
 	double t = t0;
 	int frame = 0;

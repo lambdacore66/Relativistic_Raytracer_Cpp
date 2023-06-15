@@ -86,8 +86,8 @@ hit sphere::getHit(ray r) {
 	
 	color hit_color = coeff1*coeff2*col;
 
-	//pos = (pos-position).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+position;
-	//n = n.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
+	//pos = (pos-position).rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1))+position;
+	//n = n.rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1));
 
 	// It seems that r_sph.origin().ptime()-t).Lorentz(-speed) is not the correct time as rotations change the time the ray needs to reach the sphere.
 	// This needs to be fixed. 

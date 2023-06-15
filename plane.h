@@ -46,7 +46,7 @@ hit plane::getHit(ray r) {
 
 	// Rotations DEBUG CODE=========================
 
-	if (col.y() == 0.0) {
+	/* if (col.y() == 0.0) {
 
 		r_plane.rotate(Rpos, Omega2*vec3(1,0,0)).rotate(Rpos, Omega1*vec3(0,0,1)).LorentzBoost(-speed).origin().print();
 		std::cout << " = ";
@@ -60,7 +60,7 @@ hit plane::getHit(ray r) {
 
 		std::cout << "\n ----------------------------- \n";
 
-	}
+	} */
 
 	//==============================================  It seems that the inverse formula works alright for all cases
 
@@ -89,23 +89,21 @@ hit plane::getHit(ray r) {
     double coeff1 = 1.0;
 	//TEMPORARY
 	if (cos(2*pi*Pu)*sin(2*pi*Pv) > 0) {
-
 		coeff1 = 0.66;
-
 	}
 
 	double coeff2 = sqrt((A*A+0.1)/1.1);
 
     color hit_color = coeff1*coeff2*col;
 
-	pos = (pos-Rpos).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+Rpos;
-	rdir = rdir.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
+	pos = (pos-Rpos).rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1))+Rpos;
+	rdir = rdir.rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1));
 
 	// It seems that rotations are not working properly even if Omega1 = Omega2 = 0.0. Time is messed up but somehow for c >> v it works again.
 	// Try to see if R is the identity for Omega1 = Omega2 = 0.0 and if it works by just using ONE rotation angle and not the other
 	// This needs to be fixed as it happens with all objects. It breaks hits' heriarchy.
 
-	// THE PROBLEM SEEMS TO BE THAT THIS KIND OF ROTATION DOES NOT PRESERVER DISTANCES AND NEED AN ADDITIONAL CORRECTION
+	// THE PROBLEM SEEMS TO BE THAT THIS KIND OF ROTATION DOES NOT PRESERVER DISTANCES UNLESS THEY ARE RELATIVE OR MEASURED FROM THE ROTATION POINT
 
     return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_plane.origin().ptime()-t/c).Lorentz(-speed), rdir, hit_color);
     
