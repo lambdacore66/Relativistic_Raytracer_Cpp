@@ -58,22 +58,25 @@ int main() {
 
 	//Add cubes
 									//Position            v            Phi Theta  X    Y    Z       Color
-	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));
-	obj_list.emplace_back(new cube(vec3(3,-4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,1,0)));
+	//obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,0,0)));
+	//obj_list.emplace_back(new cube(vec3(3,-4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,1,0)));
 
 
 	//Add planes
-									//Normal     C      Rpos       Omega1 Omega2     v            Color
-	obj_list.emplace_back(new plane(vec3(0,0,1), 0, vec3(5,0,-0.5),  0.0,  0.0, vec3(0,0,0), color(1,1,1)));
+									//Normal     C      Rpos     Omega1 Omega2     v            Color
+	obj_list.emplace_back(new plane(vec3(0,0,1), 0, vec3(5,0,0),  0.0,  0.0, vec3(0,0,0), color(1,1,1)));
+	
+	obj_list.emplace_back(new plane(vec3(0,0,1), 0, vec3(5,0,0),  pi/4, -pi/4, 2.5*vec3(-1,0,0), color(1,0,0)));      // Same plane with and without rotations involved
+	//obj_list.emplace_back(new plane(vec3(-1, 1, sqrt(2)), -5/2, vec3(5,0,0),  0.0, 0.0, 2.5*vec3(-1,0,0), color(1,0,0)));
 
 
 	//Add spheres
 									//Position    R  Omega1 Omega2        v                Color
-	obj_list.emplace_back(new sphere(vec3(8,0,1), 1, 0.0, 0.0,  0.95*c*vec3(0,-1,0), color(1,0,0)));
+	//obj_list.emplace_back(new sphere(vec3(8,0,0), 1, 0.0, 0.0,  0.95*c*vec3(-1,0,0), color(1,0,0)));
 
 	double fps = 10;
-	double t0 = -1.5;
-	double tf = t0+8;
+	double t0 = 0.0;
+	double tf = t0;
 
 	double t = t0;
 	int frame = 0;

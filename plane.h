@@ -41,7 +41,31 @@ class plane : public hittable {
 
 hit plane::getHit(ray r) {
 
-    ray r_plane = r.LorentzBoost(speed);//.rotate(Rpos, -Omega1*vec3(0,0,1)).rotate(Rpos, -Omega2*vec3(1,0,0));
+    ray r_plane = r.LorentzBoost(speed).rotate(Rpos, -Omega1*vec3(0,0,1)).rotate(Rpos, -Omega2*vec3(1,0,0));
+
+
+	// Rotations DEBUG CODE=========================
+
+	if (col.y() == 0.0) {
+
+		r_plane.rotate(Rpos, Omega2*vec3(1,0,0)).rotate(Rpos, Omega1*vec3(0,0,1)).LorentzBoost(-speed).origin().print();
+		std::cout << " = ";
+		r.origin().print();
+
+		std::cout << "\n";
+
+		r_plane.rotate(Rpos, Omega2*vec3(1,0,0)).rotate(Rpos, Omega1*vec3(0,0,1)).LorentzBoost(-speed).direction().print();
+		std::cout << " = ";
+		r.direction().print();;
+
+		std::cout << "\n ----------------------------- \n";
+
+	}
+
+	//==============================================  It seems that the inverse formula works alright for all cases
+
+
+
 	
     vec3 rdir = r_plane.direction();
     
@@ -74,8 +98,14 @@ hit plane::getHit(ray r) {
 
     color hit_color = coeff1*coeff2*col;
 
-	//pos = (pos-Rpos).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+Rpos;
-	//rdir = rdir.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
+	pos = (pos-Rpos).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+Rpos;
+	rdir = rdir.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
+
+	// It seems that rotations are not working properly even if Omega1 = Omega2 = 0.0. Time is messed up but somehow for c >> v it works again.
+	// Try to see if R is the identity for Omega1 = Omega2 = 0.0 and if it works by just using ONE rotation angle and not the other
+	// This needs to be fixed as it happens with all objects. It breaks hits' heriarchy.
+
+	// THE PROBLEM SEEMS TO BE THAT THIS KIND OF ROTATION DOES NOT PRESERVER DISTANCES AND NEED AN ADDITIONAL CORRECTION
 
     return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_plane.origin().ptime()-t/c).Lorentz(-speed), rdir, hit_color);
     
