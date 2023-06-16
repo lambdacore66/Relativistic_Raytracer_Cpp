@@ -53,7 +53,7 @@ ray ray::rotate(vec3 pos, vec3 Omega) {
 	vec3 rp = (orig.spatials()-pos).rotate(Omega)+pos;
 	vec3 dirp = dir.rotate(Omega);
 	
-	return ray(vec4(rp.x(), rp.y(), rp.z(), 0), dirp);
+	return ray(vec4(rp.x(), rp.y(), rp.z(), orig.ptime()), dirp);
 
 }
 

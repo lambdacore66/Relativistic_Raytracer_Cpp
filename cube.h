@@ -61,7 +61,7 @@ hit cube::getHit(ray r) {
 	for (int k = 0; k < 6; k++) {
 
 		rectangle face = cube_faces.at(k);
-		hit face_hit = face.getHit(r); //.rotate(theta*vec3(0,0,1)).rotate(phi*vec3(1,0,0)) NEED NO TE BE FIXED AND CORRECTLY IMPLEMENTED. HOWEVER RAYTRACER IS NOW FUNCTIONAL
+		hit face_hit = face.getHit(r);
 
 		if (face_hit.getBool() and  -face_hit.getWhere().ptime() < temp) { // As time is "played" backwards, you need to reverse the time coordinate.
 																	       // You could also take into account the start time and camera initial time, but

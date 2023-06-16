@@ -34,7 +34,7 @@ class sphere: public hittable {
 
 hit sphere::getHit(ray r) {
 
-	ray r_sph = r.LorentzBoost(speed);//.rotate(position, -Omega1*vec3(0,0,1)).rotate(position, -Omega2*vec3(1,0,0));
+	ray r_sph = r.LorentzBoost(speed).rotate(position, -Omega1*vec3(0,0,1)).rotate(position, -Omega2*vec3(1,0,0));
 	
 	vec3 n = r_sph.direction();
 	vec3 delta = r_sph.origin().spatials()-position;
@@ -86,11 +86,8 @@ hit sphere::getHit(ray r) {
 	
 	color hit_color = coeff1*coeff2*col;
 
-	//pos = (pos-position).rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1))+position;
-	//n = n.rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1));
-
-	// It seems that r_sph.origin().ptime()-t).Lorentz(-speed) is not the correct time as rotations change the time the ray needs to reach the sphere.
-	// This needs to be fixed. 
+	pos = (pos-position).rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1))+position;
+	n = n.rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1));
 
 	return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_sph.origin().ptime()-t).Lorentz(-speed), n, hit_color);
 

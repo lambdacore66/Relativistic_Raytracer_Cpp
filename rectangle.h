@@ -49,7 +49,7 @@ class rectangle : public hittable {
 
 hit rectangle::getHit(ray r) {
 
-    ray r_rct = r.LorentzBoost(speed);//.rotate(position, -Omega1*vec3(0,0,1)).rotate(position, -Omega2*vec3(1,0,0));
+    ray r_rct = r.LorentzBoost(speed).rotate(position, -Omega1*vec3(0,0,1)).rotate(position, -Omega2*vec3(1,0,0));
 	
     vec3 rdir = r_rct.direction();
     
@@ -89,8 +89,8 @@ hit rectangle::getHit(ray r) {
 
     color hit_color = coeff1*coeff2*col;
 
-	//pos = (pos-position).rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)))+position;
-	//n = n.rotate(Omega2*vec3(1,0,0).rotate(Omega1*vec3(0,0,1)));
+	pos = (pos-position).rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1))+position;
+	rdir = rdir.rotate(Omega2*vec3(1,0,0)).rotate(Omega1*vec3(0,0,1));
 
     return hit(true, vec4(pos.x(), pos.y(), pos.z(), r_rct.origin().ptime()-t/c).Lorentz(-speed), rdir, hit_color);
     
