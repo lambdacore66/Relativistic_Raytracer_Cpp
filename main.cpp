@@ -51,17 +51,15 @@ int main() {
 	std::vector<std::unique_ptr<hittable>> obj_list;
 
 	//Add rectangles
-									        //Position       Normal     X    Y  Omega1 Omega2        v             Color
-	//obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), vec3(1,0,0), 2.0, 3.0, pi/4, -pi/4, 0.95*c*vec3(-1,0,0), color(1,1,0)));
-	//obj_list.emplace_back(new rectangle(vec3(3, -3, 0), vec3(0,1,0), 3.0, 3.0, pi/4, -pi/4, 0.95*c*vec3(-1,0,0), color(1,1,0)));
+									        //Position       Normal     X    Y      Rpos      Omega1 Omega2        v             Color
+	//obj_list.emplace_back(new rectangle(vec3(1.5, -4, 0), vec3(1,0,0), 2.0, 3.0, vec3(1,0,0), pi/4, -pi/4, 0.95*c*vec3(-1,0,0), color(1,1,0)));
+	//obj_list.emplace_back(new rectangle(vec3(3, -3, 0), vec3(0,1,0), 3.0, 3.0, vec3(1,0,0), pi/4, -pi/4, 0.95*c*vec3(-1,0,0), color(1,1,0)));
 
 
 	//Add cubes
 									//Position            v            Phi Theta  X    Y    Z       Color
 	obj_list.emplace_back(new cube(vec3(3, 4, 0), 0.95*c*vec3(-1,0,0), pi/4, -pi/4, 3.0, 2.0, 3.0, color(1,0,0)));
 	obj_list.emplace_back(new cube(vec3(3,-4, 0), 0.95*c*vec3(-1,0,0), 0.0, 0.0, 3.0, 2.0, 3.0, color(1,1,0)));
-
-	// Rotations DO NOT WORK YET ON CUBES
 
 	//Add planes
 									//Normal     C      Rpos     Omega1 Omega2     v            Color
