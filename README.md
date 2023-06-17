@@ -4,7 +4,7 @@ Compile code with:
 
                    g++ main.cpp -O3 -o main -static-libstdc++ -fopenmp
 
-- Do not use -O3 if you want no compiletor optimizations.
+- Do not use -O3 if you want no compilator optimizations.
 - Do not use -fopenmp if you want no multithread support.
 
 To obtain video ouput, install ffmpeg and add it to the OS path or locate the ffmpeg executable in the same folder as the compiled executable.
