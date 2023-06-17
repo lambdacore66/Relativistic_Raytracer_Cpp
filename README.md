@@ -9,6 +9,8 @@ Compile code with:
 
 To obtain video ouput, install ffmpeg and add it to the OS´ Path or locate the ffmpeg executable in the same folder as the compiled executable.
 
+Tested and working on Windows and Ubuntu based distros.
+
 
 # Examples
 
